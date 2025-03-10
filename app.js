@@ -10,6 +10,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 app.use(express.json());
 // extra packages
 
+// added a comment
 // routes
 app.get('/', (req, res) => {
   res.send('jobs api');
