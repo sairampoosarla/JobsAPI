@@ -6,6 +6,8 @@ const app = express();
 const authRouter = require('./routes/auth.js')
 const jobsRouter = require('./routes/jobs.js')
 
+
+
 //adding the DB file here
 
 const connectDB = require('./db/connect.js')
