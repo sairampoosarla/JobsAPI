@@ -18,8 +18,10 @@ const register = async (req, res) => {
     
     //creating the user
     const user = await User.create({...req.body})
+    //here we are using the method defined in the user schema to create a json token
+    const token = user.createJWT()
     ///returning the creareted user
-    res.status(StatusCodes.CREATED).json({user})
+    res.status(StatusCodes.CREATED).json({user: {name:user.name}, token:token})
 }
 
 const login = async (req, res) => {

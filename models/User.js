@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 //this is the schema we are defining for each object to have before they can be saved in the DB
 const UserSchema = new mongoose.Schema({
@@ -31,7 +32,21 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
+    console.log("data has been pushed to the server from the function")
     next()
 })
+
+// this is adding function to the schema
+// where this function is returning the name
+UserSchema.methods.getName = function () {
+    return this.name
+}
+
+// this is adding function to the schema
+// where this function is creating a returing the jwt token
+UserSchema.methods.createJWT = function () {
+    return jwt.sign({userId:this._id, name:this.name}, 'secret', {expiresIn:'30d'})
+
+}
 
 module.exports = mongoose.model('User', UserSchema)
