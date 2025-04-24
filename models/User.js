@@ -51,4 +51,10 @@ UserSchema.methods.createJWT = function () {
 
 }
 
+// this is adding function to the schema
+// we are checking if the password provided is correct or not
+UserSchema.methods.comparePassword = function (passwordProvided) {
+    return bcrypt.compare(passwordProvided,this.password)
+}
+
 module.exports = mongoose.model('User', UserSchema)
