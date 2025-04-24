@@ -5,8 +5,7 @@ const app = express();
 
 const authRouter = require('./routes/auth.js')
 const jobsRouter = require('./routes/jobs.js')
-
-
+const auth = require('./middleware/authentication')
 
 //adding the DB file here
 
@@ -22,7 +21,9 @@ app.use(express.json());
 // added a comment
 // routes
 app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/jobs', jobsRouter)
+// adding authentication middleware to all routes of jobs
+// by this any calls made via this route would first need to pass the auth middleware
+app.use('/api/v1/jobs', auth, jobsRouter)
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
