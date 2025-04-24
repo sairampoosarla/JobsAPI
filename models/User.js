@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+require('dotenv').config();
+
 const jwt = require('jsonwebtoken')
 
 //this is the schema we are defining for each object to have before they can be saved in the DB
@@ -45,7 +47,7 @@ UserSchema.methods.getName = function () {
 // this is adding function to the schema
 // where this function is creating a returing the jwt token
 UserSchema.methods.createJWT = function () {
-    return jwt.sign({userId:this._id, name:this.name}, 'secret', {expiresIn:'30d'})
+    return jwt.sign({userId:this._id, name:this.name}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRE})
 
 }
 
