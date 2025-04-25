@@ -17,7 +17,7 @@ const JobsSchema = new mongoose.Schema({
         default:'pending'
     },
     createdBy:{
-        type:mongoose.type.ObjectID,
+        type:mongoose.Types.ObjectId,
         ref:'User',
         required:[true,"Please provide the object ID of who created it"]
     }
