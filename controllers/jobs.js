@@ -1,11 +1,14 @@
 const Job = require("../models/Job")
 const {StatusCodes} = require('http-status-codes')
-const getAllJobs = async (req, res) => {
-    res.send("Get All Jobs")
-}
 
+//controller to get all the jobs in the database for the requested user
+const getAllJobs = async (req, res) => {
+    const filteredJobs = await Job.find({createdBy:req.user.userId}).sort("createdAt")
+    res.status(StatusCodes.OK).json({filteredJobs, conut:filteredJobs.length})}
+
+//this give all the jobs created by the requested User
 const getJob = async (req, res) => {
-    res.send("Get Job")
+    
 }
 
 const updateJob = async (req, res) => {
