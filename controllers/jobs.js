@@ -1,14 +1,21 @@
 const Job = require("../models/Job")
 const {StatusCodes} = require('http-status-codes')
+const {NotFoundError} = require("../errors")
 
 //controller to get all the jobs in the database for the requested user
 const getAllJobs = async (req, res) => {
     const filteredJobs = await Job.find({createdBy:req.user.userId}).sort("createdAt")
     res.status(StatusCodes.OK).json({filteredJobs, conut:filteredJobs.length})}
 
-//this give all the jobs created by the requested User
+//this give the specfic job details
 const getJob = async (req, res) => {
-    
+    const jobId = req.params.id
+    const userId = req.user.userId
+    const job = await Job.findOne({createdBy:userId,_id:jobId})
+    if(!job){
+        throw new NotFoundError("There are no jobs for the specfied job ID")
+    }
+    res.status(StatusCodes.OK).json(job)
 }
 
 const updateJob = async (req, res) => {
